@@ -1,21 +1,17 @@
-name: 'Run App'
+name: 'Run App <Siracuse>, <Collin>'
 
 on: [push, pull_request]
 
 jobs:
-  check-bats-version:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-dotnet@v1
+      - name: install dotnet
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
-      - uses: nuget/setup-nuget@v1
-      - name: Nuget Restore
-        run: nuget restore GithubActions.sln
-      - name: Install dependencies
-        run: dotnet restore GithubActions.sln
-      - name: Build
-        run: msbuild /p:Configuration=Release GithubActions.sln
-      - name: Run Unit Tests
-        run: mono ./packages/NUnit.ConsoleRunner.*/tools/nunit3-console.exe ./Tests/bin/Release/Tests.dll
+      - name: build
+        run: dotnet build
+      - name: run unit tests
+        run: dotnet test
