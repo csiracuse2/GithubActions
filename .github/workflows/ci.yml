@@ -13,5 +13,6 @@ jobs:
           dotnet-version: '8.x'
       - name: build
         run: dotnet build
-      - name: run unit tests
-        run: dotnet test
+      - name: Run NUnit tests
+        run: mono ./packages/NUnit.ConsoleRunner/tools/nunit3-console.exe ./Tests/bin/Release/Tests.dll
+
